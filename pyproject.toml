@@ -1,0 +1,32 @@
+[project]
+name = "urbhealth"
+version = "0.1.0"
+description = "Add your description here"
+authors = [
+    { name = "Andrew Mitchell", email = "mitchellacoustics15@gmail.com" }
+]
+dependencies = [
+    "pandas[excel]>=2.2.2",
+    "statsmodels>=0.14.2",
+    "scikit-learn>=1.5.0",
+    "matplotlib>=3.9.0",
+    "ipykernel>=6.29.5",
+    "seaborn>=0.13.2",
+]
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "BSD-3-Clause" }
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.rye]
+managed = true
+dev-dependencies = []
+
+[tool.hatch.metadata]
+allow-direct-references = true
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/urbhealth"]
