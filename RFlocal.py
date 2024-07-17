@@ -38,6 +38,8 @@ for states in state_list:
     pd.concat([USA_df, state_df])
     #print(USA_df.nunique)
 
+    # Independent variables
+
     X = data[[
         'Stops per Sq Mile',
         'Park Area - Proportion',
