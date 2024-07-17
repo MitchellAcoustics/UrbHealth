@@ -1,19 +1,22 @@
+# %%
 # Import the libraries needed for the analysis
 import pandas as pd
 from statsmodels.stats.outliers_influence import variance_inflation_factor
 import statsmodels.formula.api as smf
 import os
 
+# %%
 # obtain file names and append to an empty list
 state_list = []
-with os.scandir('/Users/dylanmach/Downloads/statefiles') as statefolder:
+with os.scandir('statefiles') as statefolder:
     for entry in statefolder:
         if entry.name.endswith(".xlsx") and entry.is_file():
             state_list.append(entry.name)
 state_list.sort()  # alphabetize list for clarity
 print(state_list)
 
-data = pd.read_excel('/Users/dylanmach/Downloads/merged_excel.xlsx')
+# %%
+data = pd.read_excel('merged_excel.xlsx')
 data = data.drop_duplicates(subset=['TractID'], keep=False)
 data.replace("NULL", pd.NA, inplace=True)
 # Selective imputation for int/float indices only
@@ -21,6 +24,7 @@ fill = [c for c in data.columns if c not in ['State']]
 data = data.fillna(data[fill].mean())
 state_df = pd.DataFrame(data=data)
 
+# %%
 X = data[[
     'Stops per Sq Mile',
     'Park Area - Proportion',

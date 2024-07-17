@@ -14,7 +14,7 @@ import matplotlib.pyplot as plt
 
 # obtain file names and append to an empty list
 state_list = []
-with os.scandir('/Users/dylanmach/Downloads/statefiles') as statefolder:
+with os.scandir('statefiles') as statefolder:
     for entry in statefolder:
         if entry.name.endswith(".xlsx") and entry.is_file():
             state_list.append(entry.name)
@@ -28,7 +28,7 @@ for states in state_list:
     # accounting that Florida has no DV data
     if states == 'Florida.xlsx':
         continue
-    data = pd.read_excel(f'/Users/dylanmach/Downloads/statefiles/{states}', engine='openpyxl')
+    data = pd.read_excel(f'statefiles/{states}', engine='openpyxl')
     data = data.drop_duplicates(subset=['TractID'], keep=False)
     data.replace("NULL", pd.NA, inplace=True)
     # Selective imputation for int/float indices only
@@ -138,7 +138,7 @@ for states in state_list:
         fig.tight_layout()
         # plt.show()
 
-data2 = pd.read_excel('/Users/dylanmach/Downloads/merged_excel.xlsx')
+data2 = pd.read_excel('merged_excel.xlsx')
 
 X2 = data2[[
     'Stops per Sq Mile',
