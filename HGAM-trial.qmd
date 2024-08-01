@@ -1,0 +1,93 @@
+---
+title: "HGAM trial"
+format: 
+  html:
+    embed-resources: true
+---
+
+```{r output=FALSE}
+library(tidyverse)
+library(readxl)
+library(mgcv)
+library(MASS)
+library(gratia)
+
+# dvs <- c('CHD', 'Depression', 'COPD', 'DIABETES', 'HIGHCHOL', 'BPHIGH', 'Obesity')
+
+data <- read_excel("merged_excel.xlsx") # non-cleaned data
+```
+
+
+Basic data cleaning - not fully implemented:
+
+```{r}
+
+rename(data, PAProp = "Park Area - Proportion", StopsSqMile = "Stops per Sq Mile")
+
+data <- data |> 
+    dplyr::select(!starts_with("Unnamed")) |> # remove extra columns
+    filter(State != "FL") |> # remove Florida data
+    filter(emp_gravity < 300000) # remove emp_gravity single outlier
+
+data$est_ptrp <- na_if(data$est_ptrp, 0) # replace 0 with NA
+data$ht_ami <- na_if(data$ht_ami, 0)
+data$TractID <- factor(data$TractID) # convert to factor variable
+data$State <- factor(data$State)
+
+data$COPD <- data$COPD / 100 # convert to percentage 0-1
+
+data <- drop_na(data) # drop missing data
+
+# Not worrying about train/test split at the moment
+
+```
+
+## Single common (global) smoother for all observations (non MLM?)
+
+```{r}
+
+COPD_modG <- bam(COPD ~ s(est_vmiles, bs="tp") + s(est_ptrp, bs="tp") + s(ht_ami, bs="tp") + s(emp_gravity, bs="tp") + s(State, bs="re"), data=data, method="fREML", family="quasibinomial")
+
+draw(COPD_modG)
+summary(COPD_modG)
+
+```
+
+```{r}
+gam.check(COPD_modG)
+```
+
+```{r}
+pred_modG <- predict(COPD_modG, data, type="response", se.fit=TRUE)
+
+ggplot(data, aes(x=pred_modG$fit, y=COPD)) +
+    geom_point() +
+    geom_abline(intercept = 0, slope = 1) +
+    labs(x='Predicted Values', y='Actual Values')
+
+```
+
+## A single common smoother plus group-level smoothers that have the same wiggliness (model GS)
+
+```{r}
+
+COPD_modGS <- bam(COPD ~ s(est_vmiles, State, bs="fs") + s(emp_gravity, State, bs="fs"), data=data, method="fREML", family="quasibinomial")
+
+draw(COPD_modGS)
+summary(COPD_modGS)
+
+```
+
+```{r}
+gam.check(COPD_modGS)
+```
+
+```{r}
+pred_modGS <- predict(COPD_modGS, data, type="response", se.fit=TRUE)
+
+ggplot(data, aes(x=pred_modGS$fit, y=COPD)) +
+    geom_point() +
+    geom_abline(intercept = 0, slope = 1) +
+    labs(x='Predicted Values', y='Actual Values')
+
+```
