@@ -12,7 +12,7 @@ library(mgcv)
 library(MASS)
 library(gratia)
 
-# dvs <- c('CHD', 'Depression', 'COPD', 'DIABETES', 'HIGHCHOL', 'BPHIGH', 'Obesity')
+dvs <- c('CHD', 'Depression', 'COPD', 'DIABETES', 'HIGHCHOL', 'BPHIGH', 'Obesity')
 
 data <- read_excel("merged_excel.xlsx") # non-cleaned data
 ```
@@ -34,13 +34,15 @@ data$ht_ami <- na_if(data$ht_ami, 0)
 data$TractID <- factor(data$TractID) # convert to factor variable
 data$State <- factor(data$State)
 
-data$COPD <- data$COPD / 100 # convert to percentage 0-1
+data[dvs] <- data[dvs] / 100 # convert to percentage 0-1
 
 data <- drop_na(data) # drop missing data
 
 # Not worrying about train/test split at the moment
 
 ```
+
+# COPD test models
 
 ## Single common (global) smoother for all observations (non MLM?)
 
@@ -88,6 +90,33 @@ pred_modGS <- predict(COPD_modGS, data, type="response", se.fit=TRUE)
 ggplot(data, aes(x=pred_modGS$fit, y=COPD)) +
     geom_point() +
     geom_abline(intercept = 0, slope = 1) +
+    labs(x='Predicted Values', y='Actual Values')
+
+```
+
+# Diabetes
+
+## Single common (global) smoother for all observations (non MLM?)
+
+```{r}
+
+DIAB_modG <- bam(DIABETES ~ s(est_vmiles, bs="tp") + s(est_ptrp, bs="tp") + s(ht_ami, bs="tp") + s(emp_gravity, bs="tp") + s(State, bs="re"), data=data, method="fREML", family="quasibinomial")
+
+draw(DIAB_modG)
+summary(DIAB_modG)
+
+```
+
+```{r}
+gam.check(DIAB_modG)
+```
+
+```{r}
+pred_DiabG <- predict(DIAB_modG, data, type="response", se.fit=TRUE)
+
+ggplot(data, aes(x=pred_DiabG$fit, y=DIABETES)) +
+    geom_point() +
+    geom_abline(intercept = 0, slope = 1) + 
     labs(x='Predicted Values', y='Actual Values')
 
 ```
