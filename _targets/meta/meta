@@ -1,0 +1,20 @@
+name|type|data|command|depend|seed|path|time|size|bytes|format|repository|iteration|parent|children|seconds|warnings|error
+.Random.seed|object|3cacb3d9aa0d8004|||||||||||||||
+data|stem|24e5adbb85b42f95|14c0abc3329ce191|20ba9ae5ef37181d|33550471||t19950.9457544581s|cace245fab52b290|2057858|rds|local|vector|||0.483||
+file|stem|13eb82e1ba6cc23a|c91d354dda5dd888|2c530c1562a7fbd1|1735323524|merged_excel.xlsx|t19899.6322222222s|3c088ede2d7e0f46|8594726|file|local|vector|||0.28||
+get_data|function|d0ba4756dc58a0e6|||||||||||||||
+model_return|stem||1edba3961c3e6c6c|eb4af22883cf3132|-2144719048||t19951.0088632389s||0|rds|local|vector|||0.016||Failed to evaluate glue component tgt_featureCaused by error object tgt_features not found
+model_return_1|stem|de4105e97b725899|e45ada57dddb6aa8|89e46182cf06f139|-9349103||t19950.9983347414s|6be2a555e7695f9f|4511699|rds|local|vector|||5.733||
+model_return_2|stem|e4833324e441f826|60dbe15f7b72ca9d|e25432e777344e3c|-1767428663||t19950.9982645483s|821ecebfb107850a|4860847|rds|local|vector|||7.573||
+model_return_3|stem|0d0337d3249ae6fa|0f823ed37e6a098d|ef14c3d2f612ed2f|478078076||t19950.9970148861s|cc5c58f0b7d0780f|5020812|rds|local|vector|||7.852||
+model_return_4|stem|695ba95f660e8d08|b5bca04d50a42fdb|ab4bf06defe0b771|-1322777801||t19950.9969198643s|ec0015d9d60ff465|5541875|rds|local|vector|||13.151||
+modG|function|6f05b2936cd37d4d|||||||||||||||
+re_feature|object|bd909e3927cc5472|||||||||||||||
+reduce_features|function|c8cd9d0aaa9feca2|||||||||||||||
+tgt_feature|object|8a52f63b41293fc2|||||||||||||||
+tp_features|object|ce6cd4e1eadcf7cd|||||||||||||||
+tp_features_0|stem|e89c036385c59b07|e95f262096113b51|6c592896c671e366|-654784429||t19950.9982646278s|c3d3b541ede7844e|46|rds|local|vector|||0||
+tp_features_1|stem|9ea03b3286506a7b|b0cd751c8fc4a30f|7f64ca0b5f3aec4f|1323760226||t19950.9970149552s|a306d1d3a97c75cf|63|rds|local|vector|||0||
+tp_features_2|stem|efa5bd84fedb39cd|2055412a15145b96|5ce811fc197d3582|744802641||t19950.9967627413s|3ed5ce5eeeea6e9a|72|rds|local|vector|||0.001||
+tp_features_3|stem|fc3e0e87b2200bf9|6e372ec1245b010f|58f4adfbebdd3182|1313747187||t19950.9967627013s|d22c29dc585b97b0|78|rds|local|vector|||0||
+tp_features_4|object|ce6cd4e1eadcf7cd|||||||||||||||

@@ -83,3 +83,4 @@ renv/library/macos/R-4.4/aarch64-apple-darwin20/renv/rstudio/addins.dcf
 .DS_Store
 renv/.gitignore
 renv/activate.R
+.Rproj.user
